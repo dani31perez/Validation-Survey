@@ -4,6 +4,7 @@ import { useState } from "react";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import Progress from "./components/Progress";
 
 export default function App() {
   const [touched, setTouched] = useState([false, false, false]);
@@ -32,9 +33,10 @@ export default function App() {
     <>
       <div className="container-fluid text-primary mb-3 text-center">
         <h1>Interactive Survey</h1>
+        <Progress fields={validatedFields()}/>
       </div>
       <div className="container container-form">
-        <Form noValidate >
+        <Form noValidate>
           <Form.Group>
             <FloatingLabel
               controlId="floatingName"
