@@ -7,7 +7,6 @@ import Button from "react-bootstrap/Button";
 
 export default function App() {
   const [touched, setTouched] = useState([false, false, false]);
-  const [validation, setValidation] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [age, setAge] = useState(0);
@@ -21,11 +20,13 @@ export default function App() {
     });
   };
 
-  const handleSubmit = (e) => {
-    if(e.currentTarget.checkValidity() === false)
-      e.preventDefault();
-    setValidation(true);
-  }
+  const validatedFields = () => {
+    const validateName = name.length > 0;
+    const validateEmail = email.includes("@");
+    const validateAge = age <= 120 && age >= 1;
+    const validateCheck = selected !== "";
+    return [validateName, validateEmail, validateAge, validateCheck];
+  };
 
   return (
     <>
@@ -33,7 +34,7 @@ export default function App() {
         <h1>Interactive Survey</h1>
       </div>
       <div className="container container-form">
-        <Form noValidate validated={validation} onSubmit={handleSubmit}>
+        <Form noValidate >
           <Form.Group>
             <FloatingLabel
               controlId="floatingName"
@@ -124,7 +125,7 @@ export default function App() {
               )}
             </Form.Group>
           </div>
-          <Button type="submit" className="mt-3">
+          <Button type="submit" className="mt-3" disabled={!validatedFields().every((val) => val === true)}>
             Submit Survey
           </Button>
         </Form>
